@@ -4,7 +4,7 @@
 	* Plugin Name: MobileSharing
 	* Description: Add share menu to your blog web app
 	* Author: WiziApp Solutions Ltd.
-	* Version: 1.0.1
+	* Version: 1.1.0
 	* Author URI: http://www.wiziapp.com/
 	*/
 
@@ -15,7 +15,7 @@
 	{
                 add_action('admin_menu', 'wiziappshare_admin_menu');
                 add_action( 'wp_enqueue_scripts', 'wiziappshare_add_my_stylesheet' );
-                add_action('wp_footer','wiziappshare_footer');
+                add_action('wp_footer', 'wiziappshare_footer');
                 add_filter('the_content', 'wiziappshare_content');
                 add_action( 'admin_init', 'wiziappshare_admin_init' );
 	}
@@ -50,6 +50,8 @@
                 update_option('wiziappshare_post', $postScreen);
                 $pageScreen = $_POST['wiziappshare_page'];
                 update_option('wiziappshare_page', $pageScreen);
+                $mailInd = $_POST['wiziappshare_mail'];
+                update_option('wiziappshare_mail', $mailInd);
                 $googleInd = $_POST['wiziappshare_google'];
                 update_option('wiziappshare_google', $googleInd);
                 $facebookInd = $_POST['wiziappshare_facebook'];
@@ -64,6 +66,7 @@
                $floatIconDisplay = get_option('wiziappshare_float_display',false);
                $postScreen = get_option('wiziappshare_post',true);
                $pageScreen = get_option('wiziappshare_page');
+               $mailInd = get_option('wiziappshare_mail',true);
                $googleInd = get_option('wiziappshare_google',true);
                $facebookInd = get_option('wiziappshare_facebook',true);
                $twitterInd = get_option('wiziappshare_twitter',true);
@@ -87,6 +90,7 @@
                 <div class="wizappshare_options">
                     <div class="wiziappshare_title">Sharing options</div>
                     <div class="wiziappshare_inner_title">Enable sharing via:</div>
+                    <div class="wiziappshare_line wiziappshare_mail_line"><input type="checkbox" name="wiziappshare_mail"  value="true" <?php if ($mailInd == true) echo 'checked';?>>eMail</div>
                     <div class="wiziappshare_line wiziappshare_google_line"><input type="checkbox" name="wiziappshare_google"  value="true" <?php if ($googleInd == true) echo 'checked';?>>GooglePlus</div>
                     <div class="wiziappshare_line wiziappshare_facebook_line"><input type="checkbox" name="wiziappshare_facebook"  value="true" <?php if ($facebookInd == true) echo 'checked';?>>Facebook</div>
                     <div class="wiziappshare_line wiziappshare_linkedin_line"><input type="checkbox" name="wiziappshare_linkedin"  value="true" <?php if ($linkedinInd == true) echo 'checked';?>>Linkedin</div>
@@ -114,7 +118,9 @@
                     $postScreen = get_option('wiziappshare_post',true);
                     $pageScreen = get_option('wiziappshare_page');
 
-                        $url = get_permalink();
+                        $title = urlencode(get_the_title());
+                        $url = urlencode(get_permalink());
+                        $mailInd = get_option('wiziappshare_mail',true);
                         $googleInd = get_option('wiziappshare_google',true);
                         $facebookInd = get_option('wiziappshare_facebook',true);
                         $twitterInd = get_option('wiziappshare_twitter',true);
@@ -133,6 +139,11 @@
 
                         }
                         echo '<div class=wiziappshare-menu>';
+                        if ($mailInd == true)
+                        {
+                            $initialBottom = $initialBottom +50;
+                            echo '<a id=wiziappshare-mail class=wiziappshare-button target="_blank" href="mailto:?subject=' . $title . '&amp;body=' . $url . '" style="bottom:' . $initialBottom . 'px;"></a>';
+                        }
                         if ($googleInd == true)
                         {
                             $initialBottom = $initialBottom +50;
@@ -170,7 +181,7 @@
                     if (get_option('wiziappshare_float_display',false)) {
 
 
-                            echo '<div class=wiziappshare_show>' . $url . '</div>';
+                            echo '<div class=wiziappshare_show>' . esc_html($url) . '</div>';
                     }
                     else
                     {
@@ -179,13 +190,19 @@
                             $postScreen = get_option('wiziappshare_post',true);
                             $pageScreen = get_option('wiziappshare_page');
 
-                                $url = get_permalink();
+                                $title = urlencode(get_the_title());
+                                $url = urlencode($url);
+                                $mailInd = get_option('wiziappshare_mail',true);
                                 $googleInd = get_option('wiziappshare_google',true);
                                 $facebookInd = get_option('wiziappshare_facebook',true);
                                 $twitterInd = get_option('wiziappshare_twitter',true);
                                 $linkedinInd = get_option('wiziappshare_linkedin',true);
 
                                 echo '<ul class=wiziappshare-static-menu>';
+                                if ($mailInd == true)
+                                {
+                                    echo '<li><a id=wiziappshare-mail class=wiziappshare-button target="_blank" href="mailto:?subject=' . $title . '&amp;body=' . $url . '"></a></li>';
+                                }
                                 if ($googleInd == true)
                                 {
                                     echo '<li><a id=wiziappshare-google class=wiziappshare-button target="_blank" href="https://plus.google.com/share?url=' . $url . '"></a></li>';
@@ -209,60 +226,3 @@
             }
             return $content;
         }
- /*
-        function wiziappshare_content($content) {
-            static $firstTime = 0;
-            if ($firstTime == 0) {
-		$firstTime = 1;
-                $url = get_permalink();
-                $postScreen = get_option('wiziappshare_post',true);
-                $pageScreen = get_option('wiziappshare_page');
-
-                if (($pageScreen == true && is_page()) || ($postScreen == true && is_single()) )
-                {
-?>
-                <script class="wiziappshare_show">
-
-                    (function( $ ) {
-                        function wiziapp_pageshow( event, ui ) {
-                                $('.wiziappshare_show').parents().filter('[data-role=page]').css( "background-color", "red" );
-                                $('.wiziappshare_show').parents().filter('[data-role=page]').map(function () {
-                                    if($(this).is(':visible')) {
-                                        $('.wiziappshare-toolbar').show();
-                                        $('#wiziappshare-google').attr("href", "<?php echo "https://plus.google.com/share?url='" . $url . "'"?>");
-                                    }
-                                }) ;
-                        }
-                        $(function() {
-                            $('.wiziappshare-toolbar').show();
-                            $('#wiziappshare-google').attr("href", "<?php echo "https://plus.google.com/share?url='" . $url . "'"?>");
-                            $('[data-role=page]').on( "pageshow", wiziapp_pageshow);
-<?php
-                }
-                else {
-?>
-                <script class="wiziappshare_hide">
-                    (function( $ ) {
-                        function wiziapp_pageshow( event, ui ) {
-                                $('.wiziappshare_hide').parents().filter('[data-role=page]').css( "background-color", "red" );
-                                $('.wiziappshare_hide').parents().filter('[data-role=page]').map(function () {
-                                    if($(this).is(':visible')) {
-                                        $('.wiziappshare-toolbar').hide();
-                                    }
-                                }) ;
-                        }
-
-                        $(function() {
-                            $('.wiziappshare-toolbar').hide();
-                            $('[data-role=page]').on( "pageshow", wiziapp_pageshow);
-<?php
-                }
-?>
-                        });
-                    })(jQuery);
-
-                </script>
-            <?php
-            }
-            return $content;
-        } */

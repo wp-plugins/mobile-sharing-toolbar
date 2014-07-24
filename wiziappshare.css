@@ -14,30 +14,35 @@
     background-size: 44px 44px;
     height : 44px;
     width : 44px;
-    z-index: 2100;    
-    position: fixed; 
+    z-index: 2100;
+    position: fixed;
     left : 25px;
     cursor : pointer;
 }
 
+#wiziappshare-mail
+{
+    background-image:url('MailIcon.png');
+}
+
 #wiziappshare-google
 {
-    background-image:url('GooglePlusIcon.png');    
+    background-image:url('GooglePlusIcon.png');
 }
 
 #wiziappshare-facebook
 {
-    background-image:url('FacebookIcon.png');        
+    background-image:url('FacebookIcon.png');
 }
 
 #wiziappshare-linkedin
 {
-    background-image:url('LinkedinIcon.png');    
+    background-image:url('LinkedinIcon.png');
 }
 
 #wiziappshare-twitter
 {
-    background-image:url('TwitterIcon.png');        
+    background-image:url('TwitterIcon.png');
 }
 
 #wiziappshare-lightbox-shadow {
@@ -82,7 +87,7 @@
     display: block;
     height : 44px;
     width : 44px;
-    z-index: 2100;    
-    position: initial; 
+    z-index: 2100;
+    position: initial;
     cursor : pointer;
 }

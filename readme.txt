@@ -3,7 +3,7 @@ Contributors: wiziapp
 Tags: facebook, twitter, google+, linkdin, share, sharing, social, social sharing, mobile, mobile sharing
 Requires at least: 3.4
 Tested up to: 3.8.1
-Stable tag: 1.0.1
+Stable tag: 1.1.0
 License: GPLv2 or later
 
 Add a mobile friendly social share buttons to your mobile site so users can share your content on Facebook, Twitter, etc.
@@ -205,7 +205,7 @@ Twitter is a great method to generate web traffic and get higher ranking on sear
 - Twitter Helps in endorsing best practice and displaying knowledge of users.
 - Twitter strengthens your brand coverage and enhances your social trustworthiness.
 - Twitter increases viral prospective without spending money for marketing.
--  Twitter enables users to get a lot of benefits via internet. Mostly tweets consist of a web address that directs readers to the website of tweeter.
+- Twitter enables users to get a lot of benefits via internet. Mostly tweets consist of a web address that directs readers to the website of tweeter.
 
 = Here are a few important points to consider when it comes to getting the maximum out of Twitter =
 
@@ -414,6 +414,10 @@ Facebook also has its own URL shortener based on the domain name FB.me. In this 
 Facebook also has a service called "Facebook Live". It is a live streaming video channel. This Facebook feature allows Facebook users get updated on all the happenings on Facebook. So we can say that Facebook is not only helpful for personal users but for professional people, students, friends and many other users too. If you are still not on Facebook, chances are that you are missing on a lot. You can get a lot of related benefits for your business as well or just use the platform for networking. Join Facebook Now.
 
 == Changelog ==
+
+= 1.1.0 =
+
+* Email sharing support added
 
 = 1.0.1 =
 
