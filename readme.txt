@@ -2,7 +2,7 @@
 Contributors: wiziapp
 Tags: facebook, twitter, google+, linkdin, share, sharing, social, social sharing, mobile, mobile sharing
 Requires at least: 3.4
-Tested up to: 3.8.1
+Tested up to: 4.1
 Stable tag: 1.1.0
 License: GPLv2 or later
 
